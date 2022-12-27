@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "506446608604",
+    "project_id": "car-selling-e2e37",
+    "storage_bucket": "car-selling-e2e37.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:506446608604:android:318e0b8ce78b3a70f01c19",
+        "android_client_info": {
+          "package_name": "com.baabtra.vintagecars_seller.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "506446608604-1ploho7otgj9tqv7ul5h807p3f5gid3t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDboAOL9c5Gg5kx-eHefp7m3R8qSIGEZJw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "506446608604-1ploho7otgj9tqv7ul5h807p3f5gid3t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
