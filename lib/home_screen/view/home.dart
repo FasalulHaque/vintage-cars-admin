@@ -1,12 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:vintagecars_seller/add_cars/view/add_cars.dart';
+import 'package:vintagecars_seller/add_cars/view/add_Vintage_cars.dart';
 import 'package:vintagecars_seller/drawerScreen/view/drawerScreen.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
 
+  CollectionReference addCars = FirebaseFirestore.instance.collection(
+    'vintagecar_collection',
+  );
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +27,8 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.only(left: 70),
           child: Text(
             'Vintage Car',
-            style: GoogleFonts.abrilFatface(color: Colors.black),
+            style: GoogleFonts.abel(color: Colors.black),
+            //GoogleFonts.abrilFatface(color: Colors.black),
           ),
         ),
         systemOverlayStyle: SystemUiOverlayStyle.dark,
@@ -30,6 +38,7 @@ class HomeScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(14),
             child: TextField(
+              style: GoogleFonts.abel(),
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.symmetric(
                   vertical: 10,
@@ -144,7 +153,7 @@ class HomeScreen extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute<dynamic>(
-              builder: (context) => const AddCars(),
+              builder: (context) =>  AddCars(),
             ),
           );
         },

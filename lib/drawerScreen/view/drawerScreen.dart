@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vintagecars_seller/home_screen/home.dart';
+import 'package:vintagecars_seller/used_car/view/used_car.dart';
 
 class DrawerScreen extends StatelessWidget {
   const DrawerScreen({super.key});
@@ -48,7 +50,14 @@ class DrawerScreen extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.car_rental_outlined),
             title: const Text('Vintage car'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<dynamic>(
+                  builder: (context) =>  HomeScreen(),
+                ),
+              );
+            },
           ),
           const SizedBox(
             height: 9,
@@ -56,7 +65,14 @@ class DrawerScreen extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.car_rental_outlined),
             title: const Text('Used car'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<dynamic>(
+                  builder: (context) => const UsedCar(),
+                ),
+              );
+            },
           ),
           const SizedBox(
             height: 9,

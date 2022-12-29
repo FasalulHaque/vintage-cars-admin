@@ -21,7 +21,7 @@ class LoginScreen extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute<dynamic>(
-                builder: (context) => const HomeScreen(),
+                builder: (context) =>  HomeScreen(),
               ),
             );
           } else if (state is LoginFailed) {
