@@ -19,6 +19,7 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
               FirebaseFirestore.instance.collection('vintagecar_collection');
 
           final userId = auth.currentUser!.uid;
+
           var uuid = const Uuid();
           var carId = uuid.v4();
           XFile? image = await event.image;

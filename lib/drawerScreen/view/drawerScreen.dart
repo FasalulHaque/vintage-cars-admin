@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:vintagecars_seller/home_screen/home.dart';
 import 'package:vintagecars_seller/used_car/view/used_car.dart';
 
@@ -25,8 +27,10 @@ class DrawerScreen extends StatelessWidget {
                   backgroundColor: Colors.white,
                   child: ClipOval(
                     child: Image.asset(
-                      'assets/image/images.png',
+                      'assets/image/portrait-white-man-isolated_53876-40306.webp',
                       fit: BoxFit.cover,
+                      width: 80,
+                      height: 110,
                     ),
                   ),
                 ),
@@ -43,15 +47,21 @@ class DrawerScreen extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.favorite),
-            title: const Text('Favorite'),
+            title: Text(
+              'Favorite',
+              style: GoogleFonts.adamina(color: Colors.black),
+            ),
             onTap: () {},
           ),
           const SizedBox(
             height: 9,
           ),
           ListTile(
-            leading: const Icon(Icons.car_rental_outlined),
-            title: const Text('Vintage car'),
+            leading: const Icon(FontAwesomeIcons.car),
+            title: Text(
+              'Vintage car',
+              style: GoogleFonts.adamina(color: Colors.black),
+            ),
             onTap: () {
               Navigator.push(
                 context,
@@ -65,8 +75,11 @@ class DrawerScreen extends StatelessWidget {
             height: 9,
           ),
           ListTile(
-            leading: const Icon(Icons.car_rental_outlined),
-            title: const Text('Used car'),
+            leading: const Icon(FontAwesomeIcons.car),
+            title: Text(
+              'Used car',
+              style: GoogleFonts.adamina(color: Colors.black),
+            ),
             onTap: () {
               Navigator.push(
                 context,
@@ -81,7 +94,10 @@ class DrawerScreen extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.account_box),
-            title: const Text('Profile'),
+            title: Text(
+              'Profile',
+              style: GoogleFonts.adamina(color: Colors.black),
+            ),
             onTap: () {},
           ),
           const SizedBox(
@@ -89,7 +105,10 @@ class DrawerScreen extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.share),
-            title: const Text('Share'),
+            title: Text(
+              'Share',
+              style: GoogleFonts.adamina(color: Colors.black),
+            ),
             onTap: () {},
           ),
           const SizedBox(
@@ -97,7 +116,10 @@ class DrawerScreen extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.notifications),
-            title: const Text('Notifications'),
+            title: Text(
+              'Notifications',
+              style: GoogleFonts.adamina(color: Colors.black),
+            ),
             trailing: ClipOval(
               child: Container(
                 color: Colors.red,
@@ -118,7 +140,10 @@ class DrawerScreen extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
+            title: Text(
+              'Settings',
+              style: GoogleFonts.adamina(color: Colors.black),
+            ),
             onTap: () {},
           ),
           const SizedBox(
@@ -126,7 +151,10 @@ class DrawerScreen extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.logout),
-            title: const Text('Logout'),
+            title: Text(
+              'Logout',
+              style: GoogleFonts.adamina(color: Colors.black),
+            ),
             onTap: () {},
           ),
         ],

@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:vintagecars_seller/add_vintage_cars/bloc/collection_bloc.dart';
 
-import 'package:vintagecars_seller/add_cars/bloc/collection_bloc.dart';
 import 'package:vintagecars_seller/home_screen/home.dart';
 
 class AddCars extends StatefulWidget {
@@ -101,6 +101,7 @@ class _AddCarsState extends State<AddCars> {
                             child: Image.file(
                               File(snap.data!.path),
                               fit: BoxFit.cover,
+                              width: 120,
                             ),
                             //color: Colors.blue,
                           ),
@@ -108,11 +109,15 @@ class _AddCarsState extends State<AddCars> {
                       }
                       return InkWell(
                         onTap: getimage,
-                        child: const CircleAvatar(
+                        child: CircleAvatar(
+                          backgroundColor: Colors.white,
                           radius: 70,
                           // height: 200.0,
                           // color: Colors.blue,
-                          child: Text('Add image'),
+                          child: Text(
+                            'Upload Photo',
+                            style: GoogleFonts.abel(color: Colors.black),
+                          ),
                         ),
                       );
                     },
@@ -128,6 +133,7 @@ class _AddCarsState extends State<AddCars> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextFormField(
+                      maxLines: 2,
                       controller: nameController,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
@@ -213,7 +219,6 @@ class _AddCarsState extends State<AddCars> {
                                 ),
                               ),
                             );
-                            
                           },
                     child: Container(
                       height: 50,
