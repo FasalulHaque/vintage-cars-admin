@@ -54,42 +54,6 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          // Column(
-          //   children: [
-          //     Row(
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //       children: [
-          //         Container(
-          //           height: 50,
-          //           width: 50,
-          //           padding: const EdgeInsets.all(10),
-          //           margin: const EdgeInsets.only(left: 20),
-          //           decoration: BoxDecoration(
-          //             color: Colors.black,
-          //             borderRadius: BorderRadius.circular(10),
-          //           ),
-          //           child: Image.network(
-          //             'https://cdni.autocarindia.com/utils/imageresizer.ashx?n=https://cms.haymarketindia.net/model/uploads/modelimages/Pravaig-Defy-281120221416.jpg',
-          //             height: 50,
-          //             width: 50,
-          //             fit: BoxFit.cover,
-          //           ),
-          //         ),
-          //         Container(
-          //           height: 50,
-          //           width: 50,
-          //           padding: const EdgeInsets.all(10),
-          //           margin: const EdgeInsets.only(left: 20),
-          //           decoration: BoxDecoration(
-          //             color: Colors.black,
-          //             borderRadius: BorderRadius.circular(10),
-          //           ),
-          //         ),
-          //       ],
-          //     )
-          //   ],
-          // ),
           GridView.builder(
             physics: const ScrollPhysics(),
             shrinkWrap: true,
@@ -153,7 +117,7 @@ class HomeScreen extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute<dynamic>(
-              builder: (context) =>  AddCars(),
+              builder: (context) => AddCars(),
             ),
           );
         },

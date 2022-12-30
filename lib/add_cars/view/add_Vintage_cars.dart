@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,21 +11,40 @@ import 'package:image_picker/image_picker.dart';
 import 'package:vintagecars_seller/add_cars/bloc/collection_bloc.dart';
 import 'package:vintagecars_seller/home_screen/home.dart';
 
-class AddCars extends StatelessWidget {
+class AddCars extends StatefulWidget {
   AddCars({super.key});
 
+  @override
+  State<AddCars> createState() => _AddCarsState();
+}
+
+class _AddCarsState extends State<AddCars> {
   late final XFile? image;
 
   final carAdd = FirebaseFirestore.instance.collection('vintagecar_collection');
 
   final auth = FirebaseAuth.instance;
+
   final collectionbloc = CollectionBloc();
 
-  //Future<XFile> getimage()async{}
+  Future<XFile?> getimage() async {
+    final imagePicker = ImagePicker();
+    pickedFile = imagePicker
+        .pickImage(
+          source: ImageSource.gallery,
+        )
+        .whenComplete(() => {setState(() {})});
+  }
 
   TextEditingController nameController = TextEditingController();
+
   TextEditingController descriptionController = TextEditingController();
+
   TextEditingController PriceController = TextEditingController();
+
+  late Future<XFile?> pickedFile = Future.value(null);
+
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -62,17 +84,38 @@ class AddCars extends StatelessWidget {
           body: ListView(
             children: [
               const SizedBox(
-                height: 70,
+                height: 30,
               ),
-              CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 60,
-                child: ClipOval(
-                  child: Image.network(
-                    'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1376&q=80',
-                    fit: BoxFit.cover,
-                    width: 116,
-                    height: 116,
+              InkWell(
+                onTap: getimage,
+                child: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 60,
+                  child: FutureBuilder<XFile?>(
+                    future: pickedFile,
+                    builder: (context, snap) {
+                      if (snap.hasData) {
+                        return ClipOval(
+                          child: CircleAvatar(
+                            radius: 60,
+                            child: Image.file(
+                              File(snap.data!.path),
+                              fit: BoxFit.cover,
+                            ),
+                            //color: Colors.blue,
+                          ),
+                        );
+                      }
+                      return InkWell(
+                        onTap: getimage,
+                        child: const CircleAvatar(
+                          radius: 70,
+                          // height: 200.0,
+                          // color: Colors.blue,
+                          child: Text('Add image'),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
@@ -106,6 +149,7 @@ class AddCars extends StatelessWidget {
                       height: 30,
                     ),
                     TextFormField(
+                      maxLines: 8,
                       controller: descriptionController,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
@@ -127,6 +171,8 @@ class AddCars extends StatelessWidget {
                       height: 30,
                     ),
                     TextFormField(
+                      maxLines: 2,
+                      keyboardType: TextInputType.number,
                       controller: PriceController,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
@@ -154,18 +200,21 @@ class AddCars extends StatelessWidget {
                 color: Colors.white,
                 child: Center(
                   child: GestureDetector(
-                    onTap: () {
-                      collectionbloc.add(
-                        CarAddEvent(
-                          name: nameController.text,
-                          description: descriptionController.text,
-                          price: double.parse(
-                            PriceController.text,
-                          ),
-                          image: image!,
-                        ),
-                      );
-                    },
+                    onTap: isLoading
+                        ? null
+                        : () {
+                            collectionbloc.add(
+                              CarAddEvent(
+                                image: pickedFile,
+                                name: nameController.text,
+                                description: descriptionController.text,
+                                price: double.parse(
+                                  PriceController.text,
+                                ),
+                              ),
+                            );
+                            
+                          },
                     child: Container(
                       height: 50,
                       width: 150,
@@ -196,38 +245,11 @@ class AddCars extends StatelessWidget {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
       ),
     );
   }
-
-//   Future<void> createVintageCar({
-//     required String name,
-//     required String description,
-//     required String price,
-//     required String image,
-//   }) async {
-//     final addCar =
-//         FirebaseFirestore.instance.collection('vintagecar_collection');
-
-//     var uuid = const Uuid();
-//     final userid = auth.currentUser!.uid;
-//     var carid = uuid.v4();
-
-//     // final reference = FirebaseStorage.instance.ref().child('cars_image');
-
-//     try {
-//       await addCar.doc(carid).set({
-//         'cars_name': name,
-//         'cars_description': description,
-//         'cars_price': price,
-//         'cars_image': image,
-//         'car_id': carid,
-//       });
-//     } catch (e) {}
-//   }
-// }
 }

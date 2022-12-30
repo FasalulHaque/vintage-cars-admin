@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,7 +6,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
-
 part 'collection_event.dart';
 part 'collection_state.dart';
 
@@ -23,13 +21,14 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
           final userId = auth.currentUser!.uid;
           var uuid = const Uuid();
           var carId = uuid.v4();
+          XFile? image = await event.image;
 
           final refernce = FirebaseStorage.instance
               .ref()
               .child('cars_image')
-              .child(event.image.name);
+              .child(image!.name);
 
-          final file = File(event.image.path);
+          final file = File(image.path);
           await refernce.putFile(file);
           final imagelink = await refernce.getDownloadURL();
 
@@ -43,6 +42,7 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
           });
           emit(CarAddSucess());
         } catch (e) {
+          print(e);
           emit(CarAddFiled());
         }
       }

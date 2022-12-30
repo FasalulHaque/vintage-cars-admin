@@ -7,6 +7,8 @@ class DrawerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // FocusScope.of(context).unfocus();
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -54,7 +56,7 @@ class DrawerScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute<dynamic>(
-                  builder: (context) =>  HomeScreen(),
+                  builder: (context) => HomeScreen(),
                 ),
               );
             },

@@ -11,7 +11,7 @@ class CarAddEvent extends CollectionEvent {
     required this.price,
   });
 
-  XFile image;
+  Future<XFile?> image;
   String name;
   String description;
   double price;
