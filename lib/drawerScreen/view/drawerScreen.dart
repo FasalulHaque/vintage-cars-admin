@@ -59,7 +59,7 @@ class DrawerScreen extends StatelessWidget {
           ListTile(
             leading: const Icon(FontAwesomeIcons.car),
             title: Text(
-              'Vintage car',
+              'Electric Car',
               style: GoogleFonts.adamina(color: Colors.black),
             ),
             onTap: () {
@@ -84,7 +84,7 @@ class DrawerScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute<dynamic>(
-                  builder: (context) => const UsedCar(),
+                  builder: (context) => UsedCar(),
                 ),
               );
             },
@@ -96,6 +96,17 @@ class DrawerScreen extends StatelessWidget {
             leading: const Icon(Icons.account_box),
             title: Text(
               'Profile',
+              style: GoogleFonts.adamina(color: Colors.black),
+            ),
+            onTap: () {},
+          ),
+          const SizedBox(
+            height: 9,
+          ),
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: Text(
+              'Orders ',
               style: GoogleFonts.adamina(color: Colors.black),
             ),
             onTap: () {},
@@ -125,10 +136,14 @@ class DrawerScreen extends StatelessWidget {
                 color: Colors.red,
                 width: 20,
                 height: 20,
-                child: const Center(
+                child: Center(
                   child: Text(
                     '7',
-                    style: TextStyle(color: Colors.white, fontSize: 12),
+                    style: GoogleFonts.adamina(
+                      color: Colors.white,
+                      fontSize: 12,
+                    ),
+                    // TextStyle(color: Colors.white, fontSize: 12),
                   ),
                 ),
               ),

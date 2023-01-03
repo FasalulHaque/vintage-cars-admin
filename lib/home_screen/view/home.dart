@@ -3,14 +3,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:vintagecars_seller/add_vintage_cars/view/add_Vintage_cars.dart';
+import 'package:vintagecars_seller/add_Electric_cars/view/add_electric_cars.dart';
 import 'package:vintagecars_seller/drawerScreen/view/drawerScreen.dart';
+import 'package:vintagecars_seller/home_screen/home.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
   CollectionReference addCars = FirebaseFirestore.instance.collection(
-    'vintagecar_collection',
+    'Electriccar_collection',
   );
 
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -39,7 +40,7 @@ class HomeScreen extends StatelessWidget {
         title: Padding(
           padding: const EdgeInsets.only(left: 82),
           child: Text(
-            'Vintage Car',
+            'Electric Car',
             style: GoogleFonts.abel(color: Colors.black),
           ),
         ),
@@ -84,50 +85,72 @@ class HomeScreen extends StatelessWidget {
                       crossAxisCount: 2,
                       mainAxisSpacing: 12,
                       crossAxisSpacing: 12,
-                      mainAxisExtent: 300,
+                      mainAxisExtent: 330,
                       childAspectRatio: 0.75,
                     ),
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(8),
-                        child: Container(
-                          margin: const EdgeInsets.only(top: 18, bottom: 30),
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            // Theme.of(context).primaryColor,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 5,
-                                spreadRadius: 1,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ElectricDetails(
+                                  electricAxis: caritems[index],
+                                ),
                               ),
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              Image.network(
-                                caritems[index]['cars_image'].toString(),
-                                height: 50,
-                                fit: BoxFit.cover,
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Text(caritems[index]['cars_name'].toString()),
-                              Row(
-                                children: const [
-                                  SizedBox(
-                                    height: 70,
-                                    width: 15,
-                                  ),
-                                  Icon(Icons.currency_rupee),
-                                  Text('999')
-                                ],
-                              )
-                            ],
+                            );
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.only(top: 18, bottom: 30),
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              // Theme.of(context).primaryColor,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 5,
+                                  spreadRadius: 1,
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                Image.network(
+                                  caritems[index]['cars_image'].toString(),
+                                  height: 100,
+                                  width: 200,
+                                  fit: BoxFit.cover,
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  caritems[index]['cars_name'].toString(),
+                                  style: GoogleFonts.actor(fontSize: 17),
+                                ),
+                                Row(
+                                  children: [
+                                    const SizedBox(
+                                      height: 70,
+                                      width: 15,
+                                    ),
+                                    const Icon(
+                                      Icons.currency_rupee,
+                                      size: 20,
+                                    ),
+                                    Text(
+                                      caritems[index]['cars_price'].toString(),
+                                      style: GoogleFonts.andadaPro(),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       );

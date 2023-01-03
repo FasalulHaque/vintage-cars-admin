@@ -1,10 +1,9 @@
-part of 'collection_bloc.dart';
+part of 'used_collection_bloc.dart';
 
 @immutable
-abstract class CollectionEvent {}
-
-class CarAddEvent extends CollectionEvent {
-  CarAddEvent({
+abstract class UsedCollectionEvent {}
+class UsedCarAddEvent extends UsedCollectionEvent {
+  UsedCarAddEvent({
     required this.image,
     required this.name,
     required this.description,
@@ -14,5 +13,5 @@ class CarAddEvent extends CollectionEvent {
   Future<XFile?> image;
   String name;
   String description;
-  double price;
+  String price;
 }

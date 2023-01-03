@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,17 +7,19 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
-part 'collection_event.dart';
-part 'collection_state.dart';
 
-class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
-  CollectionBloc() : super(CollectionInitial()) {
-    on<CollectionEvent>((event, emit) async {
-      if (event is CarAddEvent) {
+part 'used_collection_event.dart';
+part 'used_collection_state.dart';
+
+class UsedCollectionBloc
+    extends Bloc<UsedCollectionEvent, UsedCollectionState> {
+  UsedCollectionBloc() : super(UsedCollectionInitial()) {
+    on<UsedCollectionEvent>((event, emit) async {
+      if (event is UsedCarAddEvent) {
         try {
           final auth = FirebaseAuth.instance;
           final carAdd =
-              FirebaseFirestore.instance.collection('vintagecar_collection');
+              FirebaseFirestore.instance.collection('Usedcar_collection');
 
           final userId = auth.currentUser!.uid;
 
@@ -40,11 +43,12 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
             'cars_image': imagelink,
             'car_id': carId,
             'user_id': userId,
+            'type': 'used'
           });
-          emit(CarAddSucess());
+          emit(UsedCarAddSucess());
         } catch (e) {
           print(e);
-          emit(CarAddFiled());
+          emit(UsedCarAddFiled());
         }
       }
     });
