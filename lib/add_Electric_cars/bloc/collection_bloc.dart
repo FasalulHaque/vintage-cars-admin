@@ -22,16 +22,21 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
 
           var uuid = const Uuid();
           var carId = uuid.v4();
-          XFile? image = await event.image;
+          final images = event.image;
 
-          final refernce = FirebaseStorage.instance
-              .ref()
-              .child('cars_image')
-              .child(image!.name);
+          final imageList = [];
 
-          final file = File(image.path);
-          await refernce.putFile(file);
-          final imagelink = await refernce.getDownloadURL();
+          for (final image in images!) {
+            final refernce = FirebaseStorage.instance
+                .ref()
+                .child('cars_image')
+                .child(image!.name);
+            final file = File(image.path);
+            await refernce.putFile(file);
+            final imagelink = await refernce.getDownloadURL();
+
+            imageList.add(imagelink);
+          }
 
           await carAdd.doc(carId).set({
             'cars_name': event.name,
@@ -43,7 +48,7 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
             'battery_capacity': event.battery,
             'top_speed': event.speed,
             'cars_price': event.price,
-            'cars_image': imagelink,
+            'cars_imags': imageList,
             'car_id': carId,
             'user_id': userId,
             'type': 'electric'

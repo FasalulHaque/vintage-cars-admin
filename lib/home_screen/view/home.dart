@@ -121,7 +121,7 @@ class HomeScreen extends StatelessWidget {
                                   height: 30,
                                 ),
                                 Image.network(
-                                  caritems[index]['cars_image'].toString(),
+                                  caritems[index]['cars_imags'][0].toString(),
                                   height: 100,
                                   width: 200,
                                   fit: BoxFit.cover,

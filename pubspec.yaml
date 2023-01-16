@@ -8,6 +8,7 @@ environment:
   flutter: 3.3.8
 
 dependencies:
+  awesome_snackbar_content: ^0.1.0
   bloc: ^8.1.0
   cloud_firestore: ^4.0.4
   firebase_auth: ^4.1.0
@@ -20,6 +21,7 @@ dependencies:
     sdk: flutter
   flutter_svg: ^1.1.6
   font_awesome_flutter: ^10.3.0
+  get: ^4.6.5
   google_fonts: ^3.0.1
   image_picker: ^0.8.6
   intl: ^0.17.0

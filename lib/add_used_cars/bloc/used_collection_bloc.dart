@@ -38,7 +38,16 @@ class UsedCollectionBloc
 
           await carAdd.doc(carId).set({
             'cars_name': event.name,
-            'cars_description': event.description,
+            'kilometers_driven': event.kilometers,
+            'registration': event.registration,
+            'registration_in': event.registeredIn,
+            'fuel_type': event.fuel,
+            'transmission': event.transmission,
+            'Insurance': event.insurance,
+            'mileage': event.mileage,
+            'max_power': event.maxpower,
+            'seating': event.seating,
+            'model': event.model,
             'cars_price': event.price,
             'cars_image': imagelink,
             'car_id': carId,
@@ -47,7 +56,7 @@ class UsedCollectionBloc
           });
           emit(UsedCarAddSucess());
         } catch (e) {
-          print(e);
+          //print(e);
           emit(UsedCarAddFiled());
         }
       }

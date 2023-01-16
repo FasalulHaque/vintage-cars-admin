@@ -2,14 +2,12 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vintagecars_seller/add_used_cars/bloc/used_collection_bloc.dart';
 
-import 'package:vintagecars_seller/home_screen/home.dart';
 import 'package:vintagecars_seller/used_car/used_car.dart';
 
 class AddUsedCars extends StatefulWidget {
@@ -41,9 +39,16 @@ class _AddCarsState extends State<AddUsedCars> {
   }
 
   TextEditingController nameController = TextEditingController();
-
-  TextEditingController descriptionController = TextEditingController();
-
+  TextEditingController kilometersController = TextEditingController();
+  TextEditingController registrationController = TextEditingController();
+  TextEditingController registeredinController = TextEditingController();
+  TextEditingController fuelController = TextEditingController();
+  TextEditingController transmissionController = TextEditingController();
+  TextEditingController insuranceController = TextEditingController();
+  TextEditingController mileageController = TextEditingController();
+  TextEditingController maxpowerController = TextEditingController();
+  TextEditingController seatingController = TextEditingController();
+  TextEditingController modelController = TextEditingController();
   TextEditingController priceController = TextEditingController();
 
   @override
@@ -84,13 +89,13 @@ class _AddCarsState extends State<AddUsedCars> {
           body: ListView(
             children: [
               const SizedBox(
-                height: 10,
+                height: 1,
               ),
               InkWell(
                 onTap: getimage,
                 child: CircleAvatar(
                   backgroundColor: Colors.white,
-                  radius: 90,
+                  radius: 70,
                   child: FutureBuilder<XFile?>(
                     future: pickedFile,
                     builder: (context, snap) {
@@ -98,7 +103,7 @@ class _AddCarsState extends State<AddUsedCars> {
                         return ClipOval(
                           child: CircleAvatar(
                             backgroundColor: Colors.white,
-                            radius: 90,
+                            radius: 70,
                             child: Image.file(
                               File(snap.data!.path),
                               height: 160,
@@ -131,7 +136,7 @@ class _AddCarsState extends State<AddUsedCars> {
                 ),
               ),
               const SizedBox(
-                height: 17,
+                height: 12,
               ),
               Padding(
                 padding: const EdgeInsets.all(20),
@@ -139,14 +144,13 @@ class _AddCarsState extends State<AddUsedCars> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextFormField(
-                      maxLines: 2,
                       controller: nameController,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
                           vertical: 18,
                           horizontal: 10,
                         ),
-                        labelText: 'Name',
+                        labelText: 'Car Name',
                         labelStyle: GoogleFonts.abel(),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
@@ -158,17 +162,16 @@ class _AddCarsState extends State<AddUsedCars> {
                       ),
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 15,
                     ),
                     TextFormField(
-                      maxLines: 8,
-                      controller: descriptionController,
+                      controller: kilometersController,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
                           vertical: 18,
                           horizontal: 10,
                         ),
-                        labelText: 'Description',
+                        labelText: 'Kilometers Driven',
                         labelStyle: GoogleFonts.abel(),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
@@ -180,11 +183,198 @@ class _AddCarsState extends State<AddUsedCars> {
                       ),
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 15,
                     ),
                     TextFormField(
-                      maxLines: 2,
-                      //keyboardType: TextInputType.number,
+                      controller: registrationController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 18,
+                          horizontal: 10,
+                        ),
+                        labelText: 'Registration',
+                        labelStyle: GoogleFonts.abel(),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      controller: registeredinController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 18,
+                          horizontal: 10,
+                        ),
+                        labelText: 'Registered in',
+                        labelStyle: GoogleFonts.abel(),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      controller: fuelController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 18,
+                          horizontal: 10,
+                        ),
+                        labelText: 'Fuel Type',
+                        labelStyle: GoogleFonts.abel(),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      controller: transmissionController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 18,
+                          horizontal: 10,
+                        ),
+                        labelText: 'Transmission',
+                        labelStyle: GoogleFonts.abel(),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      controller: insuranceController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 18,
+                          horizontal: 10,
+                        ),
+                        labelText: 'Insurance',
+                        labelStyle: GoogleFonts.abel(),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      controller: maxpowerController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 18,
+                          horizontal: 10,
+                        ),
+                        labelText: 'Max power(bhp)',
+                        labelStyle: GoogleFonts.abel(),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      controller: mileageController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 18,
+                          horizontal: 10,
+                        ),
+                        labelText: 'Mileage(kmpl)',
+                        labelStyle: GoogleFonts.abel(),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      controller: modelController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 18,
+                          horizontal: 10,
+                        ),
+                        labelText: 'Model',
+                        labelStyle: GoogleFonts.abel(),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      controller: seatingController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 18,
+                          horizontal: 10,
+                        ),
+                        labelText: 'Seating capacity',
+                        labelStyle: GoogleFonts.abel(),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
                       controller: priceController,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
@@ -219,7 +409,16 @@ class _AddCarsState extends State<AddUsedCars> {
                               UsedCarAddEvent(
                                 image: pickedFile,
                                 name: nameController.text,
-                                description: descriptionController.text,
+                                kilometers: kilometersController.text,
+                                registration: registrationController.text,
+                                registeredIn: registeredinController.text,
+                                fuel: fuelController.text,
+                                transmission: transmissionController.text,
+                                insurance: insuranceController.text,
+                                maxpower: maxpowerController.text,
+                                mileage: mileageController.text,
+                                seating: seatingController.text,
+                                model: modelController.text,
                                 price: priceController.text,
                               ),
                             );

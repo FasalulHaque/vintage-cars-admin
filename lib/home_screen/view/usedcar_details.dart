@@ -1,23 +1,13 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ElectricDetails extends StatefulWidget {
-  ElectricDetails({super.key, required this.electricAxis});
-
-  var electricAxis;
-
-  @override
-  State<ElectricDetails> createState() => _ElectricDetailsState();
-}
-
-class _ElectricDetailsState extends State<ElectricDetails> {
-  String? selectedImage;
+class UsedCarDetails extends StatelessWidget {
+  UsedCarDetails({super.key, required this.usedAxis});
+  var usedAxis;
 
   @override
   Widget build(BuildContext context) {
-    // selectedImage = widget.electricAxis['cars_imags'][0].toString();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -49,19 +39,8 @@ class _ElectricDetailsState extends State<ElectricDetails> {
               margin: const EdgeInsets.only(
                 top: 20,
               ),
-              child:
-                  // TabBarView(
-                  //   children: [
-                  //     Image.network(
-                  //         widget.electricAxis['cars_imags'][0].toString()),
-                  //     Image.network(
-                  //         widget.electricAxis['cars_imags'][1].toString()),
-                  //     Image.network(
-                  //         widget.electricAxis['cars_imags'][2].toString()),
-                  //   ],
-                  // )
-                  Image.network(
-                selectedImage!,
+              child: Image.network(
+                usedAxis['cars_image'].toString(),
                 fit: BoxFit.cover,
                 height: 230,
                 width: 230,
@@ -70,7 +49,7 @@ class _ElectricDetailsState extends State<ElectricDetails> {
             Padding(
               padding: const EdgeInsets.only(left: 46, top: 13),
               child: Text(
-                widget.electricAxis['cars_name'].toString(),
+                usedAxis['cars_name'].toString(),
                 style: GoogleFonts.actor(
                   fontSize: 28,
                   fontWeight: FontWeight.w300,
@@ -109,7 +88,7 @@ class _ElectricDetailsState extends State<ElectricDetails> {
                     ),
                     child: Center(
                       child: Text(
-                        widget.electricAxis['cars_price'].toString(),
+                        usedAxis['cars_price'].toString(),
                         style: GoogleFonts.aBeeZee(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -141,48 +120,11 @@ class _ElectricDetailsState extends State<ElectricDetails> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 46),
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        selectedImage =
-                            widget.electricAxis['cars_imags'][0].toString();
-                      });
-                    },
-                    child: Container(
-                      height: 31,
-                      width: 31,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.red),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Container(
-                          height: 26,
-                          width: 26,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.red,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 9,
-                ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      selectedImage =
-                          widget.electricAxis['cars_imags'][1].toString();
-                    });
-                  },
                   child: Container(
                     height: 31,
                     width: 31,
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black),
+                      border: Border.all(color: Colors.red),
                       shape: BoxShape.circle,
                     ),
                     child: Center(
@@ -191,8 +133,29 @@ class _ElectricDetailsState extends State<ElectricDetails> {
                         width: 26,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.black,
+                          color: Colors.red,
                         ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 9,
+                ),
+                Container(
+                  height: 31,
+                  width: 31,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: Container(
+                      height: 26,
+                      width: 26,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.black,
                       ),
                     ),
                   ),
@@ -272,7 +235,7 @@ class _ElectricDetailsState extends State<ElectricDetails> {
                             height: 10,
                           ),
                           Text(
-                            widget.electricAxis['top_speed'].toString(),
+                            usedAxis['max_power'].toString(),
                             style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
@@ -281,10 +244,10 @@ class _ElectricDetailsState extends State<ElectricDetails> {
                         ],
                       ),
                       const SizedBox(
-                        width: 87,
+                        width: 90,
                       ),
                       Row(
-                        children: [
+                        children: <Widget>[
                           Container(
                             height: 40,
                             width: 40,
@@ -317,7 +280,7 @@ class _ElectricDetailsState extends State<ElectricDetails> {
                                 height: 10,
                               ),
                               Text(
-                                widget.electricAxis['fuel_type'].toString(),
+                                usedAxis['fuel_type'].toString(),
                                 style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w500,
@@ -370,7 +333,7 @@ class _ElectricDetailsState extends State<ElectricDetails> {
                             height: 10,
                           ),
                           Text(
-                            widget.electricAxis['transmission'].toString(),
+                            usedAxis['transmission'].toString(),
                             style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
@@ -379,7 +342,7 @@ class _ElectricDetailsState extends State<ElectricDetails> {
                         ],
                       ),
                       const SizedBox(
-                        width: 70,
+                        width: 74,
                       ),
                       Row(
                         children: [
@@ -413,8 +376,7 @@ class _ElectricDetailsState extends State<ElectricDetails> {
                                 height: 10,
                               ),
                               Text(
-                                widget.electricAxis['seating_capacity']
-                                    .toString(),
+                                usedAxis['seating'].toString(),
                                 style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w500,
@@ -447,7 +409,7 @@ class _ElectricDetailsState extends State<ElectricDetails> {
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                         ),
                         child: Image.asset(
-                          'assets/image/power-battery-2195871-1887280-removebg-preview.png',
+                          'assets/image/2018_Philippine_new_plates-removebg-preview.png',
                           height: 30,
                           width: 30,
                         ),
@@ -459,7 +421,7 @@ class _ElectricDetailsState extends State<ElectricDetails> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'Battery',
+                            'Registration',
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
@@ -469,7 +431,7 @@ class _ElectricDetailsState extends State<ElectricDetails> {
                             height: 10,
                           ),
                           Text(
-                            widget.electricAxis['battery_capacity'].toString(),
+                            usedAxis['registration'].toString(),
                             style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
@@ -478,7 +440,7 @@ class _ElectricDetailsState extends State<ElectricDetails> {
                         ],
                       ),
                       const SizedBox(
-                        width: 89,
+                        width: 76,
                       ),
                       Row(
                         children: [
@@ -491,7 +453,8 @@ class _ElectricDetailsState extends State<ElectricDetails> {
                                   BorderRadius.all(Radius.circular(8)),
                             ),
                             child: Image.asset(
-                              'assets/image/rhfg-removebg-preview.png',
+                              'assets/image/fuel-gauge-icon-meter-full-tank-car-vebg-preview.png',
+                              width: 50,
                             ),
                           ),
                           const SizedBox(
@@ -501,7 +464,7 @@ class _ElectricDetailsState extends State<ElectricDetails> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text(
-                                'Dr Range',
+                                'Mileage',
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w500,
@@ -511,7 +474,7 @@ class _ElectricDetailsState extends State<ElectricDetails> {
                                 height: 10,
                               ),
                               Text(
-                                widget.electricAxis['driving_range'].toString(),
+                                usedAxis['mileage'].toString(),
                                 style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w500,
@@ -556,7 +519,7 @@ class _ElectricDetailsState extends State<ElectricDetails> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'Safety',
+                            'Insurance',
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
@@ -566,12 +529,159 @@ class _ElectricDetailsState extends State<ElectricDetails> {
                             height: 10,
                           ),
                           Text(
-                            widget.electricAxis['safety'].toString(),
+                            usedAxis['Insurance'].toString(),
                             style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
                             ),
                           )
+                        ],
+                      ),
+                      const SizedBox(
+                        width: 43,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            height: 40,
+                            width: 40,
+                            decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 164, 208, 244),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                            ),
+                            child: Image.asset(
+                              'assets/image/red-sedan-car-icon-in-flat-design-vector-16737556-removebg-preview.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 12,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Model',
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                usedAxis['model'].toString(),
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20, left: 30, right: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        height: 40,
+                        width: 40,
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 164, 208, 244),
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                        child: Image.asset(
+                          'assets/image/speedometer-icon-simple-style-isolated-vector-illustration-auto-spare-parts-symbol-81638125-removebg-preview.png',
+                          height: 30,
+                          width: 30,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Kilometers Driven',
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            usedAxis['kilometers_driven'].toString(),
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        width: 49,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            height: 40,
+                            width: 40,
+                            decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 164, 208, 244),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                            ),
+                            child: const Icon(
+                              Icons.app_registration,
+                              size: 30,
+                            ),
+                            // child: Image.asset(
+                            //   'assets/image/red-sedan-car-icon-in-flat-design-vector-16737556-removebg-preview.png',
+                            //   fit: BoxFit.cover,
+                            // ),
+                          ),
+                          const SizedBox(
+                            width: 12,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'regist In',
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                usedAxis['registration_in'].toString(),
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )
+                            ],
+                          ),
                         ],
                       ),
                     ],

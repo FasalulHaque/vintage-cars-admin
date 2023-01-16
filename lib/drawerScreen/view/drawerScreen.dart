@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:vintagecars_seller/drawerScreen/drawerScreen.dart';
 import 'package:vintagecars_seller/home_screen/home.dart';
 import 'package:vintagecars_seller/used_car/view/used_car.dart';
 
@@ -9,7 +10,7 @@ class DrawerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // FocusScope.of(context).unfocus();
+    FocusScope.of(context).unfocus();
 
     return Drawer(
       child: ListView(
@@ -44,14 +45,6 @@ class DrawerScreen extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-          ListTile(
-            leading: const Icon(Icons.favorite),
-            title: Text(
-              'Favorite',
-              style: GoogleFonts.adamina(color: Colors.black),
-            ),
-            onTap: () {},
           ),
           const SizedBox(
             height: 9,
@@ -93,34 +86,19 @@ class DrawerScreen extends StatelessWidget {
             height: 9,
           ),
           ListTile(
-            leading: const Icon(Icons.account_box),
+            leading: const Icon(Icons.bookmark_outline_sharp),
             title: Text(
-              'Profile',
+              'Bookings ',
               style: GoogleFonts.adamina(color: Colors.black),
             ),
-            onTap: () {},
-          ),
-          const SizedBox(
-            height: 9,
-          ),
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: Text(
-              'Orders ',
-              style: GoogleFonts.adamina(color: Colors.black),
-            ),
-            onTap: () {},
-          ),
-          const SizedBox(
-            height: 9,
-          ),
-          ListTile(
-            leading: const Icon(Icons.share),
-            title: Text(
-              'Share',
-              style: GoogleFonts.adamina(color: Colors.black),
-            ),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<dynamic>(
+                  builder: (context) => BookingsUserss(),
+                ),
+              );
+            },
           ),
           const SizedBox(
             height: 9,
@@ -143,7 +121,6 @@ class DrawerScreen extends StatelessWidget {
                       color: Colors.white,
                       fontSize: 12,
                     ),
-                    // TextStyle(color: Colors.white, fontSize: 12),
                   ),
                 ),
               ),
@@ -163,14 +140,6 @@ class DrawerScreen extends StatelessWidget {
           ),
           const SizedBox(
             height: 9,
-          ),
-          ListTile(
-            leading: const Icon(Icons.logout),
-            title: Text(
-              'Logout',
-              style: GoogleFonts.adamina(color: Colors.black),
-            ),
-            onTap: () {},
           ),
         ],
       ),

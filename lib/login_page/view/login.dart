@@ -4,9 +4,23 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:vintagecars_seller/home_screen/view/home.dart';
 import 'package:vintagecars_seller/login_page/bloc/authentication_bloc.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool _obsecuretext = true;
+  void _toggle() {
+    setState(() {
+      _obsecuretext = !_obsecuretext;
+    });
+  }
+
   TextEditingController mailController = TextEditingController();
+
   TextEditingController passwordController = TextEditingController();
 
   final authbloc = AuthenticationBloc();
@@ -21,7 +35,7 @@ class LoginScreen extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute<dynamic>(
-                builder: (context) =>  HomeScreen(),
+                builder: (context) => HomeScreen(),
               ),
             );
           } else if (state is LoginFailed) {
@@ -75,14 +89,19 @@ class LoginScreen extends StatelessWidget {
                         height: 30,
                       ),
                       TextField(
-                        obscureText: true,
+                        obscureText: _obsecuretext,
                         controller: passwordController,
                         decoration: InputDecoration(
                           fillColor: Colors.grey.shade100,
                           filled: true,
-                          suffixIcon: const Icon(
-                            Icons.visibility,
-                            color: Color.fromARGB(255, 80, 79, 79),
+                          suffixIcon: IconButton(
+                            onPressed: _toggle,
+                            icon: Icon(
+                              _obsecuretext
+                                  ? Icons.remove_red_eye_outlined
+                                  : Icons.visibility_off,
+                              color: const Color.fromARGB(255, 80, 79, 79),
+                            ),
                           ),
                           prefixIcon: const Icon(
                             Icons.lock,

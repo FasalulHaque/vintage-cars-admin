@@ -1,8 +1,9 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -28,14 +29,32 @@ class _AddCarsState extends State<AddCars> {
 
   final collectionbloc = CollectionBloc();
 
-  Future<XFile?> getimage() async {
-    final imagePicker = ImagePicker();
-    pickedFile = imagePicker
-        .pickImage(
-          source: ImageSource.gallery,
-        )
-        .whenComplete(() => {setState(() {})});
-  }
+  // final ImagePicker imgpicker = ImagePicker();
+  // List<XFile>? imagefiles;
+
+  // openImages() async {
+  //   try {
+  //     var pickedfiles = await imgpicker.pickMultiImage();
+  //     //you can use ImageCourse.camera for Camera capture
+  //     if (pickedfiles != null) {
+  //       imagefiles = pickedfiles;
+  //       setState(() {});
+  //     } else {
+  //       print("No image is selected.");
+  //     }
+  //   } catch (e) {
+  //     print("error while picking file.");
+  //   }
+  // }
+
+  // Future<XFile?> getimage() async {
+  //   final imagePicker = ImagePicker();
+  //   pickedFile = imagePicker
+  //       .pickImage(
+  //         source: ImageSource.gallery,
+  //       )
+  //       .whenComplete(() => {setState(() {})});
+  // }
 
   TextEditingController carnameController = TextEditingController();
   TextEditingController fuelTypeController = TextEditingController();
@@ -45,12 +64,29 @@ class _AddCarsState extends State<AddCars> {
   TextEditingController batteryCapacityController = TextEditingController();
   TextEditingController seatingCapacityController = TextEditingController();
   TextEditingController topSpeedController = TextEditingController();
-
   TextEditingController priceController = TextEditingController();
 
-  late Future<XFile?> pickedFile = Future.value(null);
+  List<XFile?>? imagefiles;
 
   bool isLoading = false;
+
+  final imgpicker = ImagePicker();
+
+  Future<List<XFile>>? pickedfiles;
+
+  Future<void> openImages() async {
+    try {
+      pickedfiles = imgpicker.pickMultiImage();
+      if (pickedfiles != null) {
+        imagefiles = await pickedfiles;
+        setState(() {});
+        print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+        print(imagefiles);
+      } else {
+        print('No image is selected.');
+      }
+    } catch (e) {}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +97,8 @@ class _AddCarsState extends State<AddCars> {
           if (state is CarAddSucess) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text('Sucessfully added'),
+                backgroundColor: Colors.red,
+                content: Text('Sucessfully added....'),
               ),
             );
             Navigator.push(
@@ -92,48 +129,34 @@ class _AddCarsState extends State<AddCars> {
               const SizedBox(
                 height: 1,
               ),
-              InkWell(
-                onTap: getimage,
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 70,
-                  child: FutureBuilder<XFile?>(
-                    future: pickedFile,
-                    builder: (context, snap) {
-                      if (snap.hasData) {
-                        return ClipOval(
-                          child: CircleAvatar(
-                            radius: 70,
-                            backgroundColor: Colors.white,
-                            child: Image.file(
-                              File(snap.data!.path),
-                              fit: BoxFit.cover,
-                              width: 180,
-                              height: 180,
-                            ),
-                            //color: Colors.blue,
-                          ),
-                        );
-                      }
-                      return InkWell(
-                        onTap: getimage,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 70,
-                          // height: 200.0,
-                          // color: Colors.blue,
-                          child: Text(
-                            'Upload Photo',
-                            style: GoogleFonts.abel(
-                              color: Colors.black,
-                              fontSize: 22,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
+              TextButton(
+                child: Text('Upload Images'),
+                onPressed: openImages,
+              ),
+              FutureBuilder<List<XFile>>(
+                future: pickedfiles,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final images = snapshot.data;
+                    return Container(
+                      height: 100,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: images!.length,
+                        itemBuilder: (context, index) {
+                          return Image.file(
+                            File(images[index].path),
+                            fit: BoxFit.cover,
+                            width: 180,
+                            height: 180,
+                          );
+                        },
+                      ),
+                    );
+                  } else {
+                    return Text('dfghdf');
+                  }
+                },
               ),
               const SizedBox(
                 height: 12,
@@ -144,7 +167,6 @@ class _AddCarsState extends State<AddCars> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextFormField(
-                      // maxLines: 2,
                       controller: carnameController,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
@@ -166,7 +188,6 @@ class _AddCarsState extends State<AddCars> {
                       height: 15,
                     ),
                     TextFormField(
-                      //maxLines: 2,
                       controller: fuelTypeController,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
@@ -188,7 +209,6 @@ class _AddCarsState extends State<AddCars> {
                       height: 15,
                     ),
                     TextFormField(
-                      // maxLines: 8,
                       controller: drivingRangeController,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
@@ -210,8 +230,6 @@ class _AddCarsState extends State<AddCars> {
                       height: 15,
                     ),
                     TextFormField(
-                      //maxLines: 2,
-                      //keyboardType: TextInputType.number,
                       controller: safetyController,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
@@ -279,8 +297,6 @@ class _AddCarsState extends State<AddCars> {
                       height: 15,
                     ),
                     TextFormField(
-                      // maxLines: 2,
-                      //keyboardType: TextInputType.number,
                       controller: seatingCapacityController,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
@@ -302,8 +318,6 @@ class _AddCarsState extends State<AddCars> {
                       height: 15,
                     ),
                     TextFormField(
-                      // maxLines: 2,
-                      //keyboardType: TextInputType.number,
                       controller: topSpeedController,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
@@ -325,8 +339,6 @@ class _AddCarsState extends State<AddCars> {
                       height: 15,
                     ),
                     TextFormField(
-                      // maxLines: 2,
-                      //keyboardType: TextInputType.number,
                       controller: priceController,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
@@ -359,7 +371,7 @@ class _AddCarsState extends State<AddCars> {
                         : () {
                             collectionbloc.add(
                               CarAddEvent(
-                                image: pickedFile,
+                                image: imagefiles,
                                 name: carnameController.text,
                                 fuel: fuelTypeController.text,
                                 drivingRange: drivingRangeController.text,
@@ -377,7 +389,6 @@ class _AddCarsState extends State<AddCars> {
                       width: 150,
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 203, 222, 237),
-                        //grey.shade300,
                         borderRadius: BorderRadius.circular(15),
                         boxShadow: const [
                           BoxShadow(
@@ -413,3 +424,42 @@ class _AddCarsState extends State<AddCars> {
     );
   }
 }
+
+
+
+                  //   child: FutureBuilder<XFile?>(
+                  //     future: pickedFile,
+                  //     builder: (context, snap) {
+                  //       if (snap.hasData) {
+                  //         return ClipOval(
+                  //           child: CircleAvatar(
+                  //             radius: 70,
+                  //             backgroundColor: Colors.white,
+                  //             child: Image.file(
+                  //               File(snap.data!.path),
+                  //               fit: BoxFit.cover,
+                  //               width: 180,
+                  //               height: 180,
+                  //             ),
+                  //             //color: Colors.blue,
+                  //           ),
+                  //         );
+                  //       }
+                  //       return InkWell(
+                  //         onTap: getimage,
+                  //         child: CircleAvatar(
+                  //           backgroundColor: Colors.white,
+                  //           radius: 70,
+                  //           // height: 200.0,
+                  //           // color: Colors.blue,
+                  //           child: Text(
+                  //             'Upload Photo',
+                  //             style: GoogleFonts.abel(
+                  //               color: Colors.black,
+                  //               fontSize: 22,
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       );
+                  //     },
+                  //   ),
