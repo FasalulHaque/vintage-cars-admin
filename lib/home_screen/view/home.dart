@@ -67,14 +67,16 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          StreamBuilder(
+          StreamBuilder<QuerySnapshot<Object?>>(
             stream: addCars
                 .where('user_id', isEqualTo: auth.currentUser!.uid)
                 .snapshots(),
-            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            builder: (BuildContext context,
+                AsyncSnapshot<QuerySnapshot<Object?>> snapshot,) {
               if (snapshot.hasData) {
                 //print(snapshot.data!.docs);
                 final caritems = snapshot.data!.docs;
+
                 return SingleChildScrollView(
                   child: GridView.builder(
                     physics: const ScrollPhysics(),

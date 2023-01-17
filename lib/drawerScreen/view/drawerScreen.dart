@@ -104,42 +104,14 @@ class DrawerScreen extends StatelessWidget {
             height: 9,
           ),
           ListTile(
-            leading: const Icon(Icons.notifications),
+            leading: const Icon(Icons.reviews_outlined),
             title: Text(
-              'Notifications',
+              'Feedback',
               style: GoogleFonts.adamina(color: Colors.black),
             ),
-            trailing: ClipOval(
-              child: Container(
-                color: Colors.red,
-                width: 20,
-                height: 20,
-                child: Center(
-                  child: Text(
-                    '7',
-                    style: GoogleFonts.adamina(
-                      color: Colors.white,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            onTap: () {},
-          ),
-          const SizedBox(
-            height: 9,
-          ),
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: Text(
-              'Settings',
-              style: GoogleFonts.adamina(color: Colors.black),
-            ),
-            onTap: () {},
-          ),
-          const SizedBox(
-            height: 9,
+            onTap: () {
+              
+            },
           ),
         ],
       ),

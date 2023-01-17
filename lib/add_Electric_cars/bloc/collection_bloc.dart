@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
@@ -24,7 +25,7 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
           var carId = uuid.v4();
           final images = event.image;
 
-          final imageList = [];
+          final imageList = <String>[];
 
           for (final image in images!) {
             final refernce = FirebaseStorage.instance
@@ -49,6 +50,9 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
             'top_speed': event.speed,
             'cars_price': event.price,
             'cars_imags': imageList,
+            'color1': event.colors1,
+            // 'color2': event.colors2,
+            // 'color3': event.colors3,
             'car_id': carId,
             'user_id': userId,
             'type': 'electric'

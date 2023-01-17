@@ -3,9 +3,11 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:colorpicker_flutter/colorpicker_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vintagecars_seller/add_Electric_cars/bloc/collection_bloc.dart';
@@ -28,33 +30,6 @@ class _AddCarsState extends State<AddCars> {
   final auth = FirebaseAuth.instance;
 
   final collectionbloc = CollectionBloc();
-
-  // final ImagePicker imgpicker = ImagePicker();
-  // List<XFile>? imagefiles;
-
-  // openImages() async {
-  //   try {
-  //     var pickedfiles = await imgpicker.pickMultiImage();
-  //     //you can use ImageCourse.camera for Camera capture
-  //     if (pickedfiles != null) {
-  //       imagefiles = pickedfiles;
-  //       setState(() {});
-  //     } else {
-  //       print("No image is selected.");
-  //     }
-  //   } catch (e) {
-  //     print("error while picking file.");
-  //   }
-  // }
-
-  // Future<XFile?> getimage() async {
-  //   final imagePicker = ImagePicker();
-  //   pickedFile = imagePicker
-  //       .pickImage(
-  //         source: ImageSource.gallery,
-  //       )
-  //       .whenComplete(() => {setState(() {})});
-  // }
 
   TextEditingController carnameController = TextEditingController();
   TextEditingController fuelTypeController = TextEditingController();
@@ -80,13 +55,13 @@ class _AddCarsState extends State<AddCars> {
       if (pickedfiles != null) {
         imagefiles = await pickedfiles;
         setState(() {});
-        print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-        print(imagefiles);
       } else {
-        print('No image is selected.');
+        print('');
       }
     } catch (e) {}
   }
+
+  Color mycolor = Colors.lightBlue;
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +129,7 @@ class _AddCarsState extends State<AddCars> {
                       ),
                     );
                   } else {
-                    return Text('dfghdf');
+                    return const Text('');
                   }
                 },
               ),
@@ -251,8 +226,7 @@ class _AddCarsState extends State<AddCars> {
                       height: 15,
                     ),
                     TextFormField(
-                      //maxLines: 2,
-                      //keyboardType: TextInputType.number,
+                     
                       controller: transmissionController,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
@@ -274,8 +248,7 @@ class _AddCarsState extends State<AddCars> {
                       height: 15,
                     ),
                     TextFormField(
-                      // maxLines: 2,
-                      //keyboardType: TextInputType.number,
+                     
                       controller: batteryCapacityController,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
@@ -335,6 +308,23 @@ class _AddCarsState extends State<AddCars> {
                         ),
                       ),
                     ),
+
+                    // ColorPicker(
+                    //   pickerColor: mycolor,
+                    //   onColorChanged: (Color color) {
+                    //     print(mycolor);
+                    //     setState(() {
+                    //       mycolor = color;
+                    //     });
+                    //   },
+                    // ),
+                    MultipleChoiceBlockPicker(
+                      pickerColors: [mycolor], 
+                      onColorsChanged: (List<Color> colors) {
+                      
+                        print(colors);
+                      },
+                    ),
                     const SizedBox(
                       height: 15,
                     ),
@@ -380,6 +370,9 @@ class _AddCarsState extends State<AddCars> {
                                 battery: batteryCapacityController.text,
                                 seating: seatingCapacityController.text,
                                 speed: topSpeedController.text,
+                                colors1: mycolor,
+                                // colors2: mycolor,
+                                // colors3: mycolor,
                                 price: priceController.text,
                               ),
                             );
@@ -425,41 +418,3 @@ class _AddCarsState extends State<AddCars> {
   }
 }
 
-
-
-                  //   child: FutureBuilder<XFile?>(
-                  //     future: pickedFile,
-                  //     builder: (context, snap) {
-                  //       if (snap.hasData) {
-                  //         return ClipOval(
-                  //           child: CircleAvatar(
-                  //             radius: 70,
-                  //             backgroundColor: Colors.white,
-                  //             child: Image.file(
-                  //               File(snap.data!.path),
-                  //               fit: BoxFit.cover,
-                  //               width: 180,
-                  //               height: 180,
-                  //             ),
-                  //             //color: Colors.blue,
-                  //           ),
-                  //         );
-                  //       }
-                  //       return InkWell(
-                  //         onTap: getimage,
-                  //         child: CircleAvatar(
-                  //           backgroundColor: Colors.white,
-                  //           radius: 70,
-                  //           // height: 200.0,
-                  //           // color: Colors.blue,
-                  //           child: Text(
-                  //             'Upload Photo',
-                  //             style: GoogleFonts.abel(
-                  //               color: Colors.black,
-                  //               fontSize: 22,
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       );
-                  //     },
-                  //   ),

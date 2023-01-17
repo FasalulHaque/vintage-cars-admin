@@ -1,4 +1,5 @@
-import 'dart:ui';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,22 +7,20 @@ import 'package:google_fonts/google_fonts.dart';
 class ElectricDetails extends StatefulWidget {
   ElectricDetails({super.key, required this.electricAxis});
 
-  var electricAxis;
+  QueryDocumentSnapshot<Object?> electricAxis;
 
   @override
   State<ElectricDetails> createState() => _ElectricDetailsState();
 }
 
 class _ElectricDetailsState extends State<ElectricDetails> {
-  String? selectedImage;
-
   @override
   Widget build(BuildContext context) {
-    // selectedImage = widget.electricAxis['cars_imags'][0].toString();
+    final images = widget.electricAxis['cars_imags'] as List;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
           onPressed: () {
@@ -46,25 +45,26 @@ class _ElectricDetailsState extends State<ElectricDetails> {
         child: ListView(
           children: [
             Container(
+              height: 200,
               margin: const EdgeInsets.only(
                 top: 20,
               ),
-              child:
-                  // TabBarView(
-                  //   children: [
-                  //     Image.network(
-                  //         widget.electricAxis['cars_imags'][0].toString()),
-                  //     Image.network(
-                  //         widget.electricAxis['cars_imags'][1].toString()),
-                  //     Image.network(
-                  //         widget.electricAxis['cars_imags'][2].toString()),
-                  //   ],
-                  // )
-                  Image.network(
-                selectedImage!,
-                fit: BoxFit.cover,
-                height: 230,
-                width: 230,
+              child: CarouselSlider.builder(
+                options: CarouselOptions(),
+                itemCount: images.length,
+                itemBuilder: (
+                  BuildContext context,
+                  int itemIndex,
+                  int pageViewIndex,
+                ) =>
+                    Container(
+                  height: 600,
+                  width: 200,
+                  child: Image.network(
+                    images[itemIndex].toString(),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
             ),
             Padding(
@@ -125,7 +125,7 @@ class _ElectricDetailsState extends State<ElectricDetails> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 46),
                 child: Text(
-                  'Select Color',
+                  'Colors',
                   style: GoogleFonts.acme(
                     color: Colors.black,
                     fontSize: 21,
@@ -143,10 +143,10 @@ class _ElectricDetailsState extends State<ElectricDetails> {
                   padding: const EdgeInsets.only(left: 46),
                   child: InkWell(
                     onTap: () {
-                      setState(() {
-                        selectedImage =
-                            widget.electricAxis['cars_imags'][0].toString();
-                      });
+                      // setState(() {
+                      //   selectedImage =
+                      //       widget.electricAxis['cars_imags'][0].toString();
+                      // });
                     },
                     child: Container(
                       height: 31,
@@ -173,16 +173,16 @@ class _ElectricDetailsState extends State<ElectricDetails> {
                 ),
                 InkWell(
                   onTap: () {
-                    setState(() {
-                      selectedImage =
-                          widget.electricAxis['cars_imags'][1].toString();
-                    });
+                    // setState(() {
+                    //   selectedImage =
+                    //       widget.electricAxis['cars_imags'][1].toString();
+                    // });
                   },
                   child: Container(
                     height: 31,
                     width: 31,
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black),
+                      border: Border.all(),
                       shape: BoxShape.circle,
                     ),
                     child: Center(

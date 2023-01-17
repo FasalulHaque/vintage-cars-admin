@@ -15,6 +15,9 @@ class CarAddEvent extends CollectionEvent {
     required this.seating,
     required this.speed,
     required this.price,
+     required this.colors1,
+    // required this.colors2,
+    // required this.colors3,
   });
 
   List<XFile?>? image;
@@ -27,4 +30,7 @@ class CarAddEvent extends CollectionEvent {
   String seating;
   String speed;
   String price;
+   Color colors1;
+  // Color colors2;
+  // Color colors3;
 }
