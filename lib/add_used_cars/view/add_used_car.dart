@@ -25,17 +25,25 @@ class _AddCarsState extends State<AddUsedCars> {
   final auth = FirebaseAuth.instance;
   final usedCollection = UsedCollectionBloc();
 
-  late Future<XFile?> pickedFile = Future.value(null);
+  // late Future<XFile?> pickedFile = Future.value(null);
 
   bool isLoading = false;
+  List<XFile?>? imagefiles;
 
-  Future<XFile?> getimage() async {
-    final imagePicker = ImagePicker();
-    pickedFile = imagePicker
-        .pickImage(
-          source: ImageSource.gallery,
-        )
-        .whenComplete(() => {setState(() {})});
+  Future<List<XFile>>? pickedfiles;
+
+  final imgpicker = ImagePicker();
+
+  Future<void> openImages() async {
+    try {
+      pickedfiles = imgpicker.pickMultiImage();
+      if (pickedfiles != null) {
+        imagefiles = await pickedfiles;
+        setState(() {});
+      } else {
+        print('');
+      }
+    } catch (e) {}
   }
 
   TextEditingController nameController = TextEditingController();
@@ -91,49 +99,34 @@ class _AddCarsState extends State<AddUsedCars> {
               const SizedBox(
                 height: 1,
               ),
-              InkWell(
-                onTap: getimage,
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 70,
-                  child: FutureBuilder<XFile?>(
-                    future: pickedFile,
-                    builder: (context, snap) {
-                      if (snap.hasData) {
-                        return ClipOval(
-                          child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 70,
-                            child: Image.file(
-                              File(snap.data!.path),
-                              height: 160,
-                              fit: BoxFit.cover,
-                              width: 180,
-                            ),
-                            //color: Colors.blue,
-                          ),
-                        );
-                      }
-                      return InkWell(
-                        onTap: getimage,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 70,
-                          // height: 200.0,
-                          // color: Colors.blue,
-
-                          child: Text(
-                            'Upload Photo',
-                            style: GoogleFonts.abel(
-                              color: Colors.black,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
+              TextButton(
+                child: Text('Upload Images'),
+                onPressed: openImages,
+              ),
+              FutureBuilder<List<XFile>>(
+                future: pickedfiles,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final images = snapshot.data;
+                    return Container(
+                      height: 100,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: images!.length,
+                        itemBuilder: (context, index) {
+                          return Image.file(
+                            File(images[index].path),
+                            fit: BoxFit.cover,
+                            width: 180,
+                            height: 180,
+                          );
+                        },
+                      ),
+                    );
+                  } else {
+                    return const Text('');
+                  }
+                },
               ),
               const SizedBox(
                 height: 12,
@@ -407,7 +400,7 @@ class _AddCarsState extends State<AddUsedCars> {
                         : () {
                             usedCollection.add(
                               UsedCarAddEvent(
-                                image: pickedFile,
+                                image: imagefiles,
                                 name: nameController.text,
                                 kilometers: kilometersController.text,
                                 registration: registrationController.text,

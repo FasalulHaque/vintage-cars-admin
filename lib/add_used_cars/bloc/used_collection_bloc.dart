@@ -25,16 +25,29 @@ class UsedCollectionBloc
 
           var uuid = const Uuid();
           var carId = uuid.v4();
-          XFile? image = await event.image;
+          final images = event.image;
+          final imageList = <String>[];
 
-          final refernce = FirebaseStorage.instance
-              .ref()
-              .child('cars_image')
-              .child(image!.name);
+          for (final image in images!) {
+            final refernce = FirebaseStorage.instance
+                .ref()
+                .child('cars_image')
+                .child(image!.name);
+            final file = File(image.path);
+            await refernce.putFile(file);
+            final imagelink = await refernce.getDownloadURL();
 
-          final file = File(image.path);
-          await refernce.putFile(file);
-          final imagelink = await refernce.getDownloadURL();
+            imageList.add(imagelink);
+          }
+
+          // final refernce = FirebaseStorage.instance
+          //     .ref()
+          //     .child('cars_image')
+          //     .child(image!.name);
+
+          // final file = File(image.path);
+          // await refernce.putFile(file);
+          // final imagelink = await refernce.getDownloadURL();
 
           await carAdd.doc(carId).set({
             'cars_name': event.name,
@@ -49,7 +62,8 @@ class UsedCollectionBloc
             'seating': event.seating,
             'model': event.model,
             'cars_price': event.price,
-            'cars_image': imagelink,
+            'cars_image': imageList,
+            
             'car_id': carId,
             'user_id': userId,
             'type': 'used'

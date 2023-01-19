@@ -71,12 +71,12 @@ class HomeScreen extends StatelessWidget {
             stream: addCars
                 .where('user_id', isEqualTo: auth.currentUser!.uid)
                 .snapshots(),
-            builder: (BuildContext context,
-                AsyncSnapshot<QuerySnapshot<Object?>> snapshot,) {
+            builder: (
+              BuildContext context,
+              AsyncSnapshot<QuerySnapshot<Object?>> snapshot,
+            ) {
               if (snapshot.hasData) {
-                //print(snapshot.data!.docs);
                 final caritems = snapshot.data!.docs;
-
                 return SingleChildScrollView(
                   child: GridView.builder(
                     physics: const ScrollPhysics(),
@@ -87,7 +87,7 @@ class HomeScreen extends StatelessWidget {
                       crossAxisCount: 2,
                       mainAxisSpacing: 12,
                       crossAxisSpacing: 12,
-                      mainAxisExtent: 330,
+                      mainAxisExtent: 340,
                       childAspectRatio: 0.75,
                     ),
                     itemBuilder: (context, index) {
@@ -97,7 +97,7 @@ class HomeScreen extends StatelessWidget {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
+                              MaterialPageRoute<dynamic>(
                                 builder: (context) => ElectricDetails(
                                   electricAxis: caritems[index],
                                 ),
@@ -128,18 +128,29 @@ class HomeScreen extends StatelessWidget {
                                   width: 200,
                                   fit: BoxFit.cover,
                                 ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 110),
+                                  child: Image.network(
+                                    caritems[index]['brands_logo'].toString(),
+                                    height: 50,
+                                    width: 50,
+                                  ),
+                                ),
                                 const SizedBox(
-                                  height: 20,
+                                  height: 8,
                                 ),
                                 Text(
                                   caritems[index]['cars_name'].toString(),
-                                  style: GoogleFonts.actor(fontSize: 17),
+                                  style: GoogleFonts.actor(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                                 Row(
                                   children: [
                                     const SizedBox(
-                                      height: 70,
-                                      width: 15,
+                                      height: 65,
+                                      width: 19,
                                     ),
                                     const Icon(
                                       Icons.currency_rupee,

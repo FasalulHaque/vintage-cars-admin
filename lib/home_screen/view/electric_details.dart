@@ -58,8 +58,9 @@ class _ElectricDetailsState extends State<ElectricDetails> {
                   int pageViewIndex,
                 ) =>
                     Container(
+                  margin: EdgeInsets.all(19),
                   height: 600,
-                  width: 200,
+                  width: 280,
                   child: Image.network(
                     images[itemIndex].toString(),
                     fit: BoxFit.cover,
@@ -68,7 +69,7 @@ class _ElectricDetailsState extends State<ElectricDetails> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 46, top: 13),
+              padding: const EdgeInsets.only(left: 46, top: 18),
               child: Text(
                 widget.electricAxis['cars_name'].toString(),
                 style: GoogleFonts.actor(

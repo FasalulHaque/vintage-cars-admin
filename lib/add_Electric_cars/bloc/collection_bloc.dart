@@ -39,6 +39,14 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
             imageList.add(imagelink);
           }
 
+          final reference = FirebaseStorage.instance
+              .ref()
+              .child('LogoImage')
+              .child(event.logo.name);
+          final file = File(event.logo.path);
+          await reference.putFile(file);
+          final imageLinkk = await reference.getDownloadURL();
+
           await carAdd.doc(carId).set({
             'cars_name': event.name,
             'fuel_type': event.fuel,
@@ -51,12 +59,15 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
             'cars_price': event.price,
             'cars_imags': imageList,
             'color1': event.colors1,
-            // 'color2': event.colors2,
-            // 'color3': event.colors3,
+            'color2': event.colors2,
+            'color3': event.colors3,
+            'brands': event.brands,
+            'brands_logo': imageLinkk,
             'car_id': carId,
             'user_id': userId,
             'type': 'electric'
           });
+
           emit(CarAddSucess());
         } catch (e) {
           print(e);

@@ -1,13 +1,22 @@
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class UsedCarDetails extends StatelessWidget {
+class UsedCarDetails extends StatefulWidget {
   UsedCarDetails({super.key, required this.usedAxis});
-  var usedAxis;
+
+  QueryDocumentSnapshot<Object?> usedAxis;
 
   @override
+  State<UsedCarDetails> createState() => _UsedCarDetailsState();
+}
+
+class _UsedCarDetailsState extends State<UsedCarDetails> {
+  @override
   Widget build(BuildContext context) {
+    final images = widget.usedAxis['cars_image'] as List;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -35,21 +44,27 @@ class UsedCarDetails extends StatelessWidget {
       body: SafeArea(
         child: ListView(
           children: [
-            Container(
-              margin: const EdgeInsets.only(
-                top: 20,
-              ),
-              child: Image.network(
-                usedAxis['cars_image'].toString(),
-                fit: BoxFit.cover,
-                height: 230,
-                width: 230,
+            CarouselSlider.builder(
+              options: CarouselOptions(),
+              itemCount: images.length,
+              itemBuilder: (
+                BuildContext context,
+                int itemIndex,
+                int pageViewIndex,
+              ) =>
+                  Container(
+                height: 600,
+                width: 200,
+                child: Image.network(
+                  images[itemIndex].toString(),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 46, top: 13),
               child: Text(
-                usedAxis['cars_name'].toString(),
+                widget.usedAxis['cars_name'].toString(),
                 style: GoogleFonts.actor(
                   fontSize: 28,
                   fontWeight: FontWeight.w300,
@@ -88,7 +103,7 @@ class UsedCarDetails extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        usedAxis['cars_price'].toString(),
+                        widget.usedAxis['cars_price'].toString(),
                         style: GoogleFonts.aBeeZee(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -235,7 +250,7 @@ class UsedCarDetails extends StatelessWidget {
                             height: 10,
                           ),
                           Text(
-                            usedAxis['max_power'].toString(),
+                            widget.usedAxis['max_power'].toString(),
                             style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
@@ -280,7 +295,7 @@ class UsedCarDetails extends StatelessWidget {
                                 height: 10,
                               ),
                               Text(
-                                usedAxis['fuel_type'].toString(),
+                                widget.usedAxis['fuel_type'].toString(),
                                 style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w500,
@@ -333,7 +348,7 @@ class UsedCarDetails extends StatelessWidget {
                             height: 10,
                           ),
                           Text(
-                            usedAxis['transmission'].toString(),
+                            widget.usedAxis['transmission'].toString(),
                             style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
@@ -376,7 +391,7 @@ class UsedCarDetails extends StatelessWidget {
                                 height: 10,
                               ),
                               Text(
-                                usedAxis['seating'].toString(),
+                                widget.usedAxis['seating'].toString(),
                                 style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w500,
@@ -431,7 +446,7 @@ class UsedCarDetails extends StatelessWidget {
                             height: 10,
                           ),
                           Text(
-                            usedAxis['registration'].toString(),
+                            widget.usedAxis['registration'].toString(),
                             style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
@@ -474,7 +489,7 @@ class UsedCarDetails extends StatelessWidget {
                                 height: 10,
                               ),
                               Text(
-                                usedAxis['mileage'].toString(),
+                                widget.usedAxis['mileage'].toString(),
                                 style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w500,
@@ -529,7 +544,7 @@ class UsedCarDetails extends StatelessWidget {
                             height: 10,
                           ),
                           Text(
-                            usedAxis['Insurance'].toString(),
+                            widget.usedAxis['Insurance'].toString(),
                             style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
@@ -538,7 +553,7 @@ class UsedCarDetails extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(
-                        width: 43,
+                        width: 89,
                       ),
                       Row(
                         children: [
@@ -572,7 +587,7 @@ class UsedCarDetails extends StatelessWidget {
                                 height: 10,
                               ),
                               Text(
-                                usedAxis['model'].toString(),
+                                widget.usedAxis['model'].toString(),
                                 style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w500,
@@ -627,7 +642,7 @@ class UsedCarDetails extends StatelessWidget {
                             height: 10,
                           ),
                           Text(
-                            usedAxis['kilometers_driven'].toString(),
+                            widget.usedAxis['kilometers_driven'].toString(),
                             style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
@@ -674,7 +689,7 @@ class UsedCarDetails extends StatelessWidget {
                                 height: 10,
                               ),
                               Text(
-                                usedAxis['registration_in'].toString(),
+                                widget.usedAxis['registration_in'].toString(),
                                 style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w500,

@@ -1,15 +1,11 @@
-// ignore_for_file: avoid_print
-
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:colorpicker_flutter/colorpicker_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:vintagecars_seller/add_Electric_cars/add_electric_cars.dart';
 import 'package:vintagecars_seller/add_Electric_cars/bloc/collection_bloc.dart';
 
 import 'package:vintagecars_seller/home_screen/home.dart';
@@ -40,6 +36,10 @@ class _AddCarsState extends State<AddCars> {
   TextEditingController seatingCapacityController = TextEditingController();
   TextEditingController topSpeedController = TextEditingController();
   TextEditingController priceController = TextEditingController();
+  TextEditingController colors1Controller = TextEditingController();
+  TextEditingController colors2Controller = TextEditingController();
+  TextEditingController colors3Controller = TextEditingController();
+  TextEditingController brandsController = TextEditingController();
 
   List<XFile?>? imagefiles;
 
@@ -61,7 +61,13 @@ class _AddCarsState extends State<AddCars> {
     } catch (e) {}
   }
 
-  Color mycolor = Colors.lightBlue;
+  Future<XFile?> getImage() async {
+    print('==========');
+    final _imagePicker = ImagePicker();
+
+    image = await _imagePicker.pickImage(source: ImageSource.gallery);
+    print('-----${image!.name}');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -141,210 +147,97 @@ class _AddCarsState extends State<AddCars> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TextFormField(
+                    TextCard(
                       controller: carnameController,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 18,
-                          horizontal: 10,
-                        ),
-                        labelText: 'Car Name',
-                        labelStyle: GoogleFonts.abel(),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: const BorderSide(color: Colors.grey),
-                        ),
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                      ),
+                      labelText: 'Car Name',
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 12,
                     ),
-                    TextFormField(
+                    TextCard(
                       controller: fuelTypeController,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 18,
-                          horizontal: 10,
-                        ),
-                        labelText: 'Fuel Type',
-                        labelStyle: GoogleFonts.abel(),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: const BorderSide(color: Colors.grey),
-                        ),
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                      ),
+                      labelText: 'Fuel Type',
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 12,
                     ),
-                    TextFormField(
+                    TextCard(
                       controller: drivingRangeController,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 18,
-                          horizontal: 10,
-                        ),
-                        labelText: 'Driving Range',
-                        labelStyle: GoogleFonts.abel(),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: const BorderSide(color: Colors.grey),
-                        ),
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                      ),
+                      labelText: 'Driving Range',
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 12,
                     ),
-                    TextFormField(
+                    TextCard(
                       controller: safetyController,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 18,
-                          horizontal: 10,
-                        ),
-                        labelText: 'Safety',
-                        labelStyle: GoogleFonts.abel(),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: const BorderSide(color: Colors.grey),
-                        ),
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                      ),
+                      labelText: 'Safety',
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 12,
                     ),
-                    TextFormField(
-                     
+                    TextCard(
                       controller: transmissionController,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 18,
-                          horizontal: 10,
-                        ),
-                        labelText: 'Transmission',
-                        labelStyle: GoogleFonts.abel(),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: const BorderSide(color: Colors.grey),
-                        ),
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                      ),
+                      labelText: 'Transmission',
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 12,
                     ),
-                    TextFormField(
-                     
+                    TextCard(
                       controller: batteryCapacityController,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 18,
-                          horizontal: 10,
-                        ),
-                        labelText: 'Battery Capacity',
-                        labelStyle: GoogleFonts.abel(),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: const BorderSide(color: Colors.grey),
-                        ),
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                      ),
+                      labelText: 'Battery Capacity',
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 12,
                     ),
-                    TextFormField(
+                    TextCard(
                       controller: seatingCapacityController,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 18,
-                          horizontal: 10,
-                        ),
-                        labelText: 'Seating Capacity',
-                        labelStyle: GoogleFonts.abel(),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: const BorderSide(color: Colors.grey),
-                        ),
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                      ),
+                      labelText: 'Seating Capacity',
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 12,
                     ),
-                    TextFormField(
+                    TextCard(
+                      controller: colors1Controller,
+                      labelText: 'colors1',
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    TextCard(
+                      controller: colors2Controller,
+                      labelText: 'colors2',
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    TextCard(
+                      controller: colors3Controller,
+                      labelText: 'colors3',
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    TextCard(
                       controller: topSpeedController,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 18,
-                          horizontal: 10,
-                        ),
-                        labelText: 'Top Speed',
-                        labelStyle: GoogleFonts.abel(),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: const BorderSide(color: Colors.grey),
-                        ),
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                      ),
-                    ),
-
-                    // ColorPicker(
-                    //   pickerColor: mycolor,
-                    //   onColorChanged: (Color color) {
-                    //     print(mycolor);
-                    //     setState(() {
-                    //       mycolor = color;
-                    //     });
-                    //   },
-                    // ),
-                    MultipleChoiceBlockPicker(
-                      pickerColors: [mycolor], 
-                      onColorsChanged: (List<Color> colors) {
-                      
-                        print(colors);
-                      },
+                      labelText: 'Top Speed',
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 12,
                     ),
-                    TextFormField(
+                    TextCard(
+                      controller: brandsController,
+                      labelText: 'Brand',
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    TextCard(
                       controller: priceController,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 18,
-                          horizontal: 10,
-                        ),
-                        labelText: 'Price',
-                        labelStyle: GoogleFonts.abel(),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: const BorderSide(color: Colors.grey),
-                        ),
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                      ),
+                      labelText: 'Price',
+                    ),
+                    TextButton(
+                      child: Text('Upload Logo'),
+                      onPressed: getImage,
                     ),
                   ],
                 ),
@@ -361,6 +254,7 @@ class _AddCarsState extends State<AddCars> {
                         : () {
                             collectionbloc.add(
                               CarAddEvent(
+                                logo: image!,
                                 image: imagefiles,
                                 name: carnameController.text,
                                 fuel: fuelTypeController.text,
@@ -370,9 +264,10 @@ class _AddCarsState extends State<AddCars> {
                                 battery: batteryCapacityController.text,
                                 seating: seatingCapacityController.text,
                                 speed: topSpeedController.text,
-                                colors1: mycolor,
-                                // colors2: mycolor,
-                                // colors3: mycolor,
+                                colors1: colors1Controller.text,
+                                colors2: colors2Controller.text,
+                                colors3: colors3Controller.text,
+                                brands: brandsController.text,
                                 price: priceController.text,
                               ),
                             );
@@ -417,4 +312,3 @@ class _AddCarsState extends State<AddCars> {
     );
   }
 }
-

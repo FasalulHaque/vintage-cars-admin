@@ -20,7 +20,7 @@ class UsedCarAddEvent extends UsedCollectionEvent {
     required this.price,
   });
 
-  Future<XFile?> image;
+  List<XFile?>? image;
   String name;
   String kilometers;
   String registration;

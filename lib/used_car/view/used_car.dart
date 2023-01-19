@@ -26,16 +26,18 @@ class UsedCar extends StatelessWidget {
           child: Text(
             'Used Cars',
             style: GoogleFonts.abel(color: Colors.black),
-            // GoogleFonts.allan(color: Colors.black),
           ),
         ),
         elevation: 0,
       ),
-      body: StreamBuilder(
+      body: StreamBuilder<QuerySnapshot<Object?>>(
         stream: usedcar
             .where('user_id', isEqualTo: auth.currentUser!.uid)
             .snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        builder: (
+          BuildContext context,
+          AsyncSnapshot<QuerySnapshot<Object?>> snapshot,
+        ) {
           if (snapshot.hasData) {
             final useditems = snapshot.data!.docs;
             return SingleChildScrollView(
@@ -54,11 +56,12 @@ class UsedCar extends StatelessWidget {
                   return InkWell(
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute<dynamic>(
-                            builder: (context) =>
-                                UsedCarDetails(usedAxis: useditems[index]),
-                          ),);
+                        context,
+                        MaterialPageRoute<dynamic>(
+                          builder: (context) =>
+                              UsedCarDetails(usedAxis: useditems[index]),
+                        ),
+                      );
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8),
@@ -83,7 +86,7 @@ class UsedCar extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(right: 8),
                               child: Image.network(
-                                useditems[index]['cars_image'].toString(),
+                                useditems[index]['cars_image'][0].toString(),
                                 height: 100,
                                 width: 200,
 
