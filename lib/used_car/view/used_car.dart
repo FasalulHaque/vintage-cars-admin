@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vintagecars_seller/add_used_cars/view/add_used_car.dart';
 import 'package:vintagecars_seller/drawerScreen/drawerScreen.dart';
-import 'package:vintagecars_seller/home_screen/view/usedcar_details.dart';
+import 'package:vintagecars_seller/used_car/view/usedcar_details.dart';
 
 class UsedCar extends StatelessWidget {
   UsedCar({super.key});
@@ -49,7 +49,7 @@ class UsedCar extends StatelessWidget {
                   crossAxisCount: 2,
                   mainAxisSpacing: 12,
                   crossAxisSpacing: 12,
-                  mainAxisExtent: 330,
+                  mainAxisExtent: 340,
                   childAspectRatio: 0.75,
                 ),
                 itemBuilder: (context, index) {
@@ -81,20 +81,28 @@ class UsedCar extends StatelessWidget {
                         child: Column(
                           children: [
                             const SizedBox(
-                              height: 30,
+                              height: 20,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(right: 8),
                               child: Image.network(
-                                useditems[index]['cars_image'][0].toString(),
+                                useditems[index]['cars_imags'][0].toString(),
                                 height: 100,
                                 width: 200,
 
                                 //fit: BoxFit.cover,
                               ),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 110),
+                              child: Image.network(
+                                useditems[index]['brands_logo'].toString(),
+                                height: 50,
+                                width: 50,
+                              ),
+                            ),
                             const SizedBox(
-                              height: 20,
+                              height: 8,
                             ),
                             Text(
                               useditems[index]['cars_name'].toString(),
@@ -106,7 +114,10 @@ class UsedCar extends StatelessWidget {
                                   height: 70,
                                   width: 15,
                                 ),
-                                const Icon(Icons.currency_rupee),
+                                const Icon(
+                                  Icons.currency_rupee,
+                                  size: 20,
+                                ),
                                 Text(
                                   useditems[index]['cars_price'].toString(),
                                   style: GoogleFonts.andadaPro(),

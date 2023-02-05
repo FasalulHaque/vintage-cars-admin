@@ -16,7 +16,8 @@ class UsedCarDetails extends StatefulWidget {
 class _UsedCarDetailsState extends State<UsedCarDetails> {
   @override
   Widget build(BuildContext context) {
-    final images = widget.usedAxis['cars_image'] as List;
+    final images = widget.usedAxis['cars_imags'] as List;
+    final vehicleColorss = widget.usedAxis['colors'] as List;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -44,20 +45,30 @@ class _UsedCarDetailsState extends State<UsedCarDetails> {
       body: SafeArea(
         child: ListView(
           children: [
-            CarouselSlider.builder(
-              options: CarouselOptions(),
-              itemCount: images.length,
-              itemBuilder: (
-                BuildContext context,
-                int itemIndex,
-                int pageViewIndex,
-              ) =>
-                  Container(
-                height: 600,
-                width: 200,
-                child: Image.network(
-                  images[itemIndex].toString(),
-                  fit: BoxFit.cover,
+            Container(
+              height: 280,
+              width: 240,
+              margin: const EdgeInsets.only(
+                top: 20,
+              ),
+              child: CarouselSlider.builder(
+                options: CarouselOptions(),
+                itemCount: images.length,
+                itemBuilder: (
+                  BuildContext context,
+                  int itemIndex,
+                  int pageViewIndex,
+                ) =>
+                    Container(
+                  margin: const EdgeInsets.all(19),
+                  height: 400,
+                  width: 290,
+                  child: Image.network(
+                    images[itemIndex].toString(),
+                    //fit: BoxFit.cover,
+                    height: 180,
+                    width: 140,
+                  ),
                 ),
               ),
             ),
@@ -114,89 +125,19 @@ class _UsedCarDetailsState extends State<UsedCarDetails> {
                 ],
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 40, bottom: 10),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 46),
-                child: Text(
-                  'Select Color',
-                  style: GoogleFonts.acme(
-                    color: Colors.black,
-                    fontSize: 21,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
             const SizedBox(
               height: 10,
             ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 46),
-                  child: Container(
-                    height: 31,
-                    width: 31,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.red),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Center(
-                      child: Container(
-                        height: 26,
-                        width: 26,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 9,
-                ),
-                Container(
-                  height: 31,
-                  width: 31,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Center(
-                    child: Container(
-                      height: 26,
-                      width: 26,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 9,
-                ),
-                Container(
-                  height: 31,
-                  width: 31,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.blue),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Center(
-                    child: Container(
-                      height: 26,
-                      width: 26,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            Container(
+              height: 30,
+              margin: EdgeInsets.only(left: 30),
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: vehicleColorss.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return colorDots(int.parse(vehicleColorss[index].toString()));
+                },
+              ),
             ),
             const SizedBox(
               height: 50,
@@ -667,10 +608,6 @@ class _UsedCarDetailsState extends State<UsedCarDetails> {
                               Icons.app_registration,
                               size: 30,
                             ),
-                            // child: Image.asset(
-                            //   'assets/image/red-sedan-car-icon-in-flat-design-vector-16737556-removebg-preview.png',
-                            //   fit: BoxFit.cover,
-                            // ),
                           ),
                           const SizedBox(
                             width: 12,
@@ -705,6 +642,30 @@ class _UsedCarDetailsState extends State<UsedCarDetails> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  InkWell colorDots(int color) {
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        height: 31,
+        width: 31,
+        decoration: BoxDecoration(
+          border: Border.all(),
+          shape: BoxShape.circle,
+        ),
+        child: Center(
+          child: Container(
+            height: 26,
+            width: 26,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color(color),
+            ),
+          ),
         ),
       ),
     );

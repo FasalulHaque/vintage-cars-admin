@@ -9,32 +9,32 @@ class CarAddEvent extends CollectionEvent {
     required this.name,
     required this.fuel,
     required this.drivingRange,
-    required this.safety,
     required this.transmission,
     required this.battery,
     required this.seating,
     required this.speed,
     required this.price,
-    required this.colors1,
-    required this.colors2,
-    required this.colors3,
+    required this.colors,
     required this.brands,
     required this.logo,
+    required this.emiM,
+    required this.loanAmou,
+    required this.interest,
   });
 
   List<XFile?>? image;
   String name;
   String fuel;
   String drivingRange;
-  String safety;
   String transmission;
   String battery;
   String seating;
   String speed;
   String price;
-  String colors1;
-  String colors2;
-  String colors3;
+  List<Color> colors;
   String brands;
   XFile logo;
+  String emiM;
+  String loanAmou;
+  String interest;
 }

@@ -4,9 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vintagecars_seller/add_Electric_cars/add_electric_cars.dart';
 import 'package:vintagecars_seller/add_Electric_cars/bloc/collection_bloc.dart';
+import 'package:vintagecars_seller/add_Electric_cars/view/color_picker.dart';
 
 import 'package:vintagecars_seller/home_screen/home.dart';
 
@@ -40,6 +43,9 @@ class _AddCarsState extends State<AddCars> {
   TextEditingController colors2Controller = TextEditingController();
   TextEditingController colors3Controller = TextEditingController();
   TextEditingController brandsController = TextEditingController();
+  TextEditingController emiMonController = TextEditingController();
+  TextEditingController loanAmouController = TextEditingController();
+  TextEditingController interestController = TextEditingController();
 
   List<XFile?>? imagefiles;
 
@@ -69,6 +75,15 @@ class _AddCarsState extends State<AddCars> {
     print('-----${image!.name}');
   }
 
+  // create some values
+  List<Color> pickerColors = [];
+  Color currentColor = Color(0xff443a49);
+
+// ValueChanged<Color> callback
+  void changeColor(Color color) {
+    setState(() => pickerColors.add(color));
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -76,11 +91,13 @@ class _AddCarsState extends State<AddCars> {
       child: BlocListener<CollectionBloc, CollectionState>(
         listener: (context, state) {
           if (state is CarAddSucess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                backgroundColor: Colors.red,
-                content: Text('Sucessfully added....'),
-              ),
+            Fluttertoast.showToast(
+              msg: 'Sucessfully added....',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+              fontSize: 16,
             );
             Navigator.push(
               context,
@@ -111,15 +128,15 @@ class _AddCarsState extends State<AddCars> {
                 height: 1,
               ),
               TextButton(
-                child: Text('Upload Images'),
                 onPressed: openImages,
+                child: const Text('Upload Images'),
               ),
               FutureBuilder<List<XFile>>(
                 future: pickedfiles,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     final images = snapshot.data;
-                    return Container(
+                    return SizedBox(
                       height: 100,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
@@ -168,10 +185,6 @@ class _AddCarsState extends State<AddCars> {
                     const SizedBox(
                       height: 12,
                     ),
-                    TextCard(
-                      controller: safetyController,
-                      labelText: 'Safety',
-                    ),
                     const SizedBox(
                       height: 12,
                     ),
@@ -196,24 +209,16 @@ class _AddCarsState extends State<AddCars> {
                     const SizedBox(
                       height: 12,
                     ),
-                    TextCard(
-                      controller: colors1Controller,
-                      labelText: 'colors1',
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    TextCard(
-                      controller: colors2Controller,
-                      labelText: 'colors2',
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    TextCard(
-                      controller: colors3Controller,
-                      labelText: 'colors3',
-                    ),
+                    SizedBox(
+                        height: 300,
+                        child: MultipleChoiceBlockPicker(
+                          pickerColors: [
+                            Colors.white,
+                          ], //default color
+                          onColorsChanged: (List<Color> colors) {
+                            pickerColors = colors;
+                          },
+                        )),
                     const SizedBox(
                       height: 12,
                     ),
@@ -235,9 +240,30 @@ class _AddCarsState extends State<AddCars> {
                       controller: priceController,
                       labelText: 'Price',
                     ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    TextCard(
+                      controller: emiMonController,
+                      labelText: 'EMi/Mont',
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    TextCard(
+                      controller: loanAmouController,
+                      labelText: 'Loan Amount',
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    TextCard(
+                      controller: interestController,
+                      labelText: 'Interest Amount',
+                    ),
                     TextButton(
-                      child: Text('Upload Logo'),
                       onPressed: getImage,
+                      child: const Text('Upload Logo'),
                     ),
                   ],
                 ),
@@ -259,16 +285,16 @@ class _AddCarsState extends State<AddCars> {
                                 name: carnameController.text,
                                 fuel: fuelTypeController.text,
                                 drivingRange: drivingRangeController.text,
-                                safety: safetyController.text,
                                 transmission: transmissionController.text,
                                 battery: batteryCapacityController.text,
                                 seating: seatingCapacityController.text,
                                 speed: topSpeedController.text,
-                                colors1: colors1Controller.text,
-                                colors2: colors2Controller.text,
-                                colors3: colors3Controller.text,
+                                colors: pickerColors,
                                 brands: brandsController.text,
                                 price: priceController.text,
+                                emiM: emiMonController.text,
+                                loanAmou: loanAmouController.text,
+                                interest: interestController.text,
                               ),
                             );
                           },

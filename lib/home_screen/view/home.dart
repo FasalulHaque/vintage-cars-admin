@@ -161,7 +161,7 @@ class HomeScreen extends StatelessWidget {
                                       style: GoogleFonts.andadaPro(),
                                     )
                                   ],
-                                )
+                                ),
                               ],
                             ),
                           ),

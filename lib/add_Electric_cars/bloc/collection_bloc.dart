@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -46,23 +48,32 @@ class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
           final file = File(event.logo.path);
           await reference.putFile(file);
           final imageLinkk = await reference.getDownloadURL();
+          print('---------------------------');
+          print(event.colors);
+
+          final intColors = [];
+          for (final element in event.colors) {
+            intColors.add(element.value);
+          }
+
+          print(intColors);
 
           await carAdd.doc(carId).set({
             'cars_name': event.name,
             'fuel_type': event.fuel,
             'driving_range': event.drivingRange,
             'transmission': event.transmission,
-            'safety': event.safety,
             'seating_capacity': event.seating,
             'battery_capacity': event.battery,
             'top_speed': event.speed,
             'cars_price': event.price,
             'cars_imags': imageList,
-            'color1': event.colors1,
-            'color2': event.colors2,
-            'color3': event.colors3,
+            'colors': intColors,
             'brands': event.brands,
             'brands_logo': imageLinkk,
+            'emi/mon': event.emiM,
+            'loan_Amount': event.loanAmou,
+            'interest_Amoun': event.interest,
             'car_id': carId,
             'user_id': userId,
             'type': 'electric'

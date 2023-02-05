@@ -18,6 +18,18 @@ class UsedCarAddEvent extends UsedCollectionEvent {
     required this.seating,
     required this.model,
     required this.price,
+    required this.logo,
+    required this.brands,
+    required this.emiM,
+    required this.loanAmou,
+    required this.interest,
+    required this.colors,
+    
+
+    
+
+    
+
   });
 
   List<XFile?>? image;
@@ -33,4 +45,10 @@ class UsedCarAddEvent extends UsedCollectionEvent {
   String seating;
   String model;
   String price;
+  XFile logo;
+  String brands;
+  String emiM;
+  String loanAmou;
+  String interest;
+  List<Color> colors;
 }
