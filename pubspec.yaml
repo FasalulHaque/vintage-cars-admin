@@ -11,7 +11,7 @@ dependencies:
   awesome_snackbar_content: ^0.1.0
   bloc: ^8.1.0
   carousel_slider: ^4.2.1
-  cloud_firestore: ^4.0.4
+  cloud_firestore: ^4.4.3
   colorpicker_flutter: ^1.0.3
   firebase_auth: ^4.1.0
   firebase_core: ^2.1.1
